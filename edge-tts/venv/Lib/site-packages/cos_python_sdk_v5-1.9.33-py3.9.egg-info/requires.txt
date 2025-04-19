@@ -1,0 +1,5 @@
+requests>=2.8
+xmltodict
+six
+crcmod
+pycryptodome
