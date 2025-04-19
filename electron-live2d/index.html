@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live2D Model</title>
+    <script src="D:/knowledge/repo/ai_chat/live2dSpeek/js/live2dcubismcore.min.js"></script>
+    <script src="D:/knowledge/repo/ai_chat/live2dSpeek/js/live2d.min.js"></script>
+    <script src="D:/knowledge/repo/ai_chat/live2dSpeek/js/pixi.min.js"></script>
+    <script src="D:/knowledge/repo/ai_chat/live2dSpeek/js/cubism4.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: transparent;
+        }
+        #canvas {
+            display: block;
+            background-color: transparent;
+            touch-action: none;
+        }
+        /* 添加占位符元素样式 */
+        #placeholder {
+            display: none;
+            width: 200px;
+            height: 300px;
+            background-color: transparent;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+        <div id="placeholder">请放置Live2D模型文件到assets/model目录</div>
+    </div>
+    
+    <script>
+        // Model path - adjust this to your model location
+        // 如果没有模型，请放置模型文件到此路径
+        const cubism4Model = "D:/knowledge/repo/ai_chat/live2dSpeek/assets/huimeng/die mong yi.model3.json";
+        let live2d;
+        let model;
+        let modelDragging = false; // 模型内部拖动
+        let windowDragging = false; // 窗口拖动
+        let lastPosition = { x: 0, y: 0 }; // 上次拖动位置
+        
+        // 初始模型位置
+        let modelX = 0;
+        let modelY = 0;
+
+        // 设置鼠标整体状态
+        let isCtrlPressed = false;
+
+        // Initialize the application
+        async function initApp() {
+            try {
+                // 检查必要的脚本是否已加载
+                if (!window.PIXI) {
+                    showPlaceholder("PIXI.js未加载，请确保js文件存在");
+                    return;
+                }
+                
+                live2d = PIXI.live2d;
+                if (!live2d) {
+                    showPlaceholder("Live2D库未加载，请确保js文件存在");
+                    return;
+                }
+
+                // Initialize Live2D model with fully transparent background
+                const app = new PIXI.Application({
+                    view: document.getElementById("canvas"),
+                    autoStart: true,
+                    resizeTo: document.getElementById("canvas-container"),
+                    backgroundColor: 0x00000000, // 完全透明背景
+                    backgroundAlpha: 0, // 确保背景透明度为0
+                    transparent: true, // 启用透明
+                    antialias: true,   // 抗锯齿
+                    resolution: window.devicePixelRatio || 1,
+                    autoDensity: true  // 自动调整分辨率
+                });
+
+                try {
+                    // 设置舞台背景为透明
+                    app.renderer.backgroundColor = 0x00000000;
+                    app.stage.alpha = 1;
+                    
+                    // 加载模型
+                    model = await live2d.Live2DModel.from(cubism4Model);
+                    app.stage.addChild(model);
+                    
+                    // 使模型可以交互
+                    model.interactive = true;
+                    model.buttonMode = true;
+
+                    // Resize model to fit screen
+                    const resizeModel = () => {
+                        const scale = Math.min(
+                            app.screen.width / model.width * 0.9,
+                            app.screen.height / model.height * 0.9
+                        );
+                        model.scale.set(scale);
+                        
+                        // 应用当前保存的位置，或者默认居中
+                        if (modelX === 0 && modelY === 0) {
+                            // 默认居中
+                            model.position.set(
+                                (app.screen.width - model.width * scale) / 2,
+                                (app.screen.height - model.height * scale) / 2
+                            );
+                            // 记录初始位置
+                            modelX = model.position.x;
+                            modelY = model.position.y;
+                        } else {
+                            // 使用保存的位置
+                            model.position.set(modelX, modelY);
+                        }
+                    };
+                    resizeModel();
+                    window.addEventListener('resize', resizeModel);
+
+                    // 隐藏占位符
+                    document.getElementById('placeholder').style.display = 'none';
+                    document.getElementById('canvas').style.display = 'block';
+
+                    // 设置模型拖动功能
+                    setupModelDrag(model, app);
+                    
+                    // 设置窗口拖动
+                    setupWindowDrag();
+                    
+                    // 设置全局键盘事件
+                    setupKeyboardEvents();
+
+                } catch (error) {
+                    console.error("Model loading failed:", error);
+                    showPlaceholder("模型加载失败，请确保模型文件存在且格式正确");
+                }
+            } catch (error) {
+                console.error("Application initialization failed:", error);
+                showPlaceholder("应用初始化失败");
+            }
+        }
+        
+        // 设置窗口拖动
+        function setupWindowDrag() {
+            const canvasContainer = document.getElementById("canvas-container");
+            let isDragging = false;
+            let startPos = { x: 0, y: 0 };
+            let windowPos = { x: 0, y: 0 };
+            
+            // 获取初始窗口位置
+            async function updateWindowPos() {
+                if (window.electronAPI) {
+                    try {
+                        const pos = await window.electronAPI.getWindowPosition();
+                        windowPos.x = pos[0];
+                        windowPos.y = pos[1];
+                    } catch (err) {
+                        console.error("获取窗口位置失败", err);
+                    }
+                }
+            }
+            
+            // 立即获取一次窗口位置
+            updateWindowPos();
+            
+            // 鼠标按下时记录初始位置
+            document.addEventListener('mousedown', async (e) => {
+                // 如果点击的是背景区域，或者在模型上但未按下Ctrl，则启动窗口拖动
+                if (!isCtrlPressed) {
+                    isDragging = true;
+                    startPos.x = e.screenX;
+                    startPos.y = e.screenY;
+                    // 获取当前窗口位置
+                    await updateWindowPos();
+                    document.body.style.cursor = 'move';
+                }
+            });
+            
+            // 鼠标移动时处理窗口拖动
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging && !isCtrlPressed && !modelDragging) {
+                    const moveX = e.screenX - startPos.x;
+                    const moveY = e.screenY - startPos.y;
+                    
+                    // 计算新的窗口位置
+                    const newX = windowPos.x + moveX;
+                    const newY = windowPos.y + moveY;
+                    
+                    // 发送窗口位置更新
+                    if (window.electronAPI) {
+                        window.electronAPI.windowDrag(newX, newY);
+                    }
+                }
+            });
+            
+            // 鼠标释放时结束拖动
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    document.body.style.cursor = 'default';
+                    // 拖动结束后更新窗口位置
+                    updateWindowPos();
+                }
+            });
+        }
+
+        // 设置键盘事件
+        function setupKeyboardEvents() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Control') {
+                    isCtrlPressed = true;
+                    document.getElementById('canvas').style.cursor = 'move';
+                    // 当按下Ctrl键时，通知主进程进入模型拖动模式
+                    if (window.electronAPI) {
+                        window.electronAPI.setModelDrag(true);
+                    }
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'Control') {
+                    isCtrlPressed = false;
+                    document.getElementById('canvas').style.cursor = 'default';
+                    // 当释放Ctrl键时，通知主进程退出模型拖动模式
+                    if (window.electronAPI) {
+                        window.electronAPI.setModelDrag(false);
+                    }
+                }
+            });
+            
+            // 防止在切换窗口时Ctrl状态卡住
+            window.addEventListener('blur', () => {
+                isCtrlPressed = false;
+                document.getElementById('canvas').style.cursor = 'default';
+                // 确保窗口可拖动状态恢复
+                if (window.electronAPI) {
+                    window.electronAPI.setModelDrag(false);
+                }
+            });
+        }
+
+        // 设置模型拖动功能
+        function setupModelDrag(model, app) {
+            // 模型拖动事件
+            model.on('pointerdown', (event) => {
+                if (isCtrlPressed) {
+                    // Ctrl键被按下，进入模型拖动模式
+                    modelDragging = true;
+                    lastPosition.x = event.data.global.x;
+                    lastPosition.y = event.data.global.y;
+                }
+            });
+            
+            model.on('pointermove', (event) => {
+                if (modelDragging && isCtrlPressed) {
+                    // 模型拖动逻辑
+                    const newX = event.data.global.x;
+                    const newY = event.data.global.y;
+                    
+                    // 计算偏移量
+                    const offsetX = newX - lastPosition.x;
+                    const offsetY = newY - lastPosition.y;
+                    
+                    // 更新模型位置
+                    modelX += offsetX;
+                    modelY += offsetY;
+                    model.position.set(modelX, modelY);
+                    
+                    // 更新上次位置
+                    lastPosition.x = newX;
+                    lastPosition.y = newY;
+                }
+            });
+            
+            // 松开鼠标停止拖动
+            model.on('pointerup', () => {
+                modelDragging = false;
+            });
+            
+            model.on('pointerupoutside', () => {
+                modelDragging = false;
+            });
+            
+            // 双击重置模型位置
+            model.on('pointertap', (event) => {
+                if (event.data.originalEvent.detail === 2) { // 双击
+                    // 重置模型位置到屏幕中央
+                    const scale = model.scale.x;
+                    modelX = (app.screen.width - model.width * scale) / 2;
+                    modelY = (app.screen.height - model.height * scale) / 2;
+                    model.position.set(modelX, modelY);
+                }
+            });
+        }
+
+        function showPlaceholder(message) {
+            const placeholder = document.getElementById('placeholder');
+            placeholder.textContent = message || "请放置Live2D模型文件到assets/model目录";
+            placeholder.style.display = 'flex';
+            document.getElementById('canvas').style.display = 'none';
+        }
+
+        // 添加右键菜单
+        document.addEventListener('contextmenu', (e) => {
+            // 阻止默认右键菜单
+            e.preventDefault();
+            
+            // 创建提示：如何操作模型
+            const tip = document.createElement('div');
+            tip.innerHTML = `
+                <div style="position:absolute;top:${e.clientY}px;left:${e.clientX}px;
+                background-color:rgba(0,0,0,0.7);color:white;padding:10px;
+                border-radius:5px;font-size:12px;z-index:1000;">
+                    <p>按住Ctrl并拖动可移动模型位置</p>
+                    <p>双击模型可重置位置</p>
+                    <p>直接点击拖动可移动整个窗口</p>
+                </div>
+            `;
+            document.body.appendChild(tip);
+            
+            // 3秒后自动消失
+            setTimeout(() => {
+                document.body.removeChild(tip);
+            }, 3000);
+        });
+
+        // 启动应用
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
