@@ -1,0 +1,20 @@
+{
+	"Type": "Live2D Expression",
+	"Parameters": [
+		{
+			"Id": "ParamgameX3",
+			"Value": 30,
+			"Blend": "Add"
+		},
+		{
+			"Id": "Paramheadxy",
+			"Value": 30,
+			"Blend": "Add"
+		},
+		{
+			"Id": "Paramheadxy3",
+			"Value": 30,
+			"Blend": "Add"
+		}
+	]
+}

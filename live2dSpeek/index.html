@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="./js/live2dcubismcore.min.js"></script>
+    <script src="./js/live2d.min.js"></script>
+    <script src="./js/pixi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="./js/cubism4.min.js"></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>智能融合对话系统</title>
+</head>
+
+<body>
+    <div class="mode-switch">
+        <button id="modeSwitch">切换到VTuber模式</button>
+    </div>
+    <div id="container">
+        <div id="canvas-container">
+            <canvas id="canvas"></canvas>
+            <div id="voice-controls">
+                <button id="startButton" class="voice-btn">开始语音对话</button>
+                <button id="endButton" class="voice-btn" style="display: none;">结束语音对话</button>
+            </div>
+        </div>
+        <div id="chatbox">
+            <div id="chat-messages"></div>
+            <div id="chat-input">
+                <input type="text" id="user-input" placeholder="输入消息...">
+                <button id="send-btn">发送</button>
+            </div>
+        </div>
+    </div>
+    <!-- 控制面板 -->
+    <div id="control-panel">
+        <h3 style="margin-top: 0;">功能控制</h3>
+        <div class="toggle-switch">
+            <input type="checkbox" id="memory-toggle" class="toggle-input" checked>
+            <span class="toggle-slider"></span>
+            <label for="memory-toggle">记忆服务</label>
+        </div>
+        <div class="toggle-switch">
+            <input type="checkbox" id="kb-toggle" class="toggle-input" checked>
+            <span class="toggle-slider"></span>
+            <label for="kb-toggle">知识库</label>
+        </div>
+        <div class="toggle-switch">
+            <input type="checkbox" id="letta-toggle" class="toggle-input">
+            <span class="toggle-slider"></span>
+            <label for="letta-toggle">长期记忆</label>
+        </div>
+        <div class="toggle-switch">
+            <input type="checkbox" id="sources-toggle" class="toggle-input" checked>
+            <span class="toggle-slider"></span>
+            <label for="sources-toggle">显示信息来源</label>
+        </div>
+
+        <!-- 服务状态面板 -->
+        <div id="status-panel">
+            <h4 style="margin: 5px 0;">服务状态</h4>
+            <div id="services-status">
+                <div class="service-status">
+                    <span class="status-indicator status-unknown"></span>
+                    <span>记忆服务: 检查中...</span>
+                </div>
+                <div class="service-status">
+                    <span class="status-indicator status-unknown"></span>
+                    <span>知识库: 检查中...</span>
+                </div>
+                <div class="service-status">
+                    <span class="status-indicator status-unknown"></span>
+                    <span>长期记忆: 检查中...</span>
+                </div>
+            </div>
+            <div style="margin-top: 8px; font-size: 11px;">
+                <a href="#" id="refresh-status">刷新状态</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const cubism4Model = "./assets/huimeng/die mong yi.model3.json";
+        const live2d = PIXI.live2d;
+        let model;
+        let audioStream;
+        let chatHistory = [];
+        let currentMode = 'web';  // 添加模式状态
+        let vtuberWs = null;  // 添加 VTuber WebSocket 连接
+        // LLM服务配置
+        const LLM_SERVICE_URL = "http://localhost:7000";
+
+        // 记忆服务配置
+        const MEMORY_SERVICE_URL = "http://localhost:5090";
+
+        // 更新情感动作映射
+        const EmotionActionMap = {
+            happy: {
+                expressions: ["心心", "星星", "花花"],
+                motionFile: "die mong yi.motion3.json"
+            },
+            thinking: {
+                expressions: ["托腮", "托腮2", "眼镜"],
+                motionFile: "die mong yi.motion3.json"
+            },
+            elegant: {
+                expressions: ["折扇", "折扇展开"],
+                motionFile: "die mong yi.motion3.json"
+            },
+            sad: {
+                expressions: ["托腮"],
+                motionFile: "die mong yi.motion3.json"
+            },
+            angry: {
+                expressions: ["眼镜"],
+                motionFile: "die mong yi.motion3.json"
+            },
+            surprised: {
+                expressions: ["星星"],
+                motionFile: "die mong yi.motion3.json"
+            },
+            default: {
+                expressions: ["团员"],
+                motionFile: "die mong yi.motion3.json"
+            }
+        };
+
+        // 初始化应用
+        (async function initApp() {
+            // 初始化Live2D模型
+            const app = new PIXI.Application({
+                view: document.getElementById("canvas"),
+                autoStart: true,
+                resizeTo: document.getElementById("canvas-container"),
+                backgroundColor: 0xeeeeee
+            });
+
+            try {
+                model = await live2d.Live2DModel.from(cubism4Model);
+                app.stage.addChild(model);
+
+                // 自适应布局
+                const resizeModel = () => {
+                    const scale = Math.min(
+                        app.screen.width / model.width * 0.9,
+                        app.screen.height / model.height * 0.9
+                    );
+                    model.scale.set(scale);
+                    model.position.set(
+                        (app.screen.width - model.width * scale) / 2,
+                        (app.screen.height - model.height * scale) / 2
+                    );
+                };
+                resizeModel();
+                window.addEventListener('resize', resizeModel);
+
+            } catch (error) {
+                console.error("模型加载失败:", error);
+                alert("虚拟助手初始化失败，请刷新页面重试");
+            }
+
+            setupEventListeners();
+            startPolling();
+            checkServicesStatus();
+        })();
+
+        // 设置事件监听器
+        function setupEventListeners() {
+            const sendBtn = document.getElementById('send-btn');
+            const userInput = document.getElementById('user-input');
+            const modeSwitch = document.getElementById('modeSwitch');
+
+            // 直接设置事件监听器，不需要先移除
+            modeSwitch.addEventListener('click', toggleMode, { once: false });
+
+            // 消息发送
+            sendBtn.addEventListener('click', handleSendMessage);
+            userInput.addEventListener('keypress', e => e.key === 'Enter' && handleSendMessage());
+
+            // 语音控制
+            document.getElementById('startButton').addEventListener('click', startVoiceSession);
+            document.getElementById('endButton').addEventListener('click', endVoiceSession);
+
+            // 控制面板事件
+            document.getElementById('refresh-status').addEventListener('click', (e) => {
+                e.preventDefault();
+                checkServicesStatus();
+            });
+        }
+
+        // 发送消息处理
+        async function handleSendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            input.value = '';
+            await processUserMessage(message);
+        }
+
+        // 查询服务状态
+        async function checkServicesStatus() {
+            try {
+                console.log("开始检查服务状态...");
+
+                // 更新状态指示器为检查中
+                updateServiceStatus('memory', 'unknown', '记忆服务: 检查中...');
+                updateServiceStatus('kb', 'unknown', '知识库: 检查中...');
+                updateServiceStatus('letta', 'unknown', '长期记忆: 检查中...');
+
+                console.log(`正在请求健康检查API: ${LLM_SERVICE_URL}/health`);
+
+                const response = await axios.get(`${LLM_SERVICE_URL}/health`, {
+                    timeout: 5000
+                });
+
+                console.log("健康检查API响应:", response.data);
+
+                if (response.status === 200) {
+                    const data = response.data;
+
+                    // 输出详细的服务状态
+                    console.log("服务状态详情:", {
+                        memory: data.services.memory,
+                        knowledge_base: data.services.knowledge_base,
+                        letta: data.services.letta
+                    });
+
+                    // 更新记忆服务状态
+                    updateServiceStatus(
+                        'memory',
+                        data.services.memory,
+                        `记忆服务: ${getStatusText(data.services.memory)}`
+                    );
+
+                    // 更新知识库状态
+                    updateServiceStatus(
+                        'kb',
+                        data.services.knowledge_base,
+                        `知识库: ${getStatusText(data.services.knowledge_base)}`
+                    );
+                    console.log(`知识库状态: ${data.services.knowledge_base}`);
+
+                    // 更新Letta状态
+                    updateServiceStatus(
+                        'letta',
+                        data.services.letta,
+                        `长期记忆: ${getStatusText(data.services.letta)}`
+                    );
+
+                    // 根据服务状态更新控制面板
+                    document.getElementById('memory-toggle').checked = data.services.memory === 'healthy';
+                    document.getElementById('kb-toggle').checked = data.services.knowledge_base === 'healthy';
+                    document.getElementById('letta-toggle').checked =
+                        (data.services.letta === 'enabled' || data.services.letta === 'healthy');
+                }
+            } catch (error) {
+                console.error("服务状态检查失败:", error);
+                console.error("错误详情:", error.message);
+                console.error("请求配置:", error.config);
+                if (error.response) {
+                    console.error("服务器响应:", error.response.data);
+                    console.error("状态码:", error.response.status);
+                }
+                updateServiceStatus('memory', 'unhealthy', '记忆服务: 连接失败');
+                updateServiceStatus('kb', 'unhealthy', '知识库: 连接失败');
+                updateServiceStatus('letta', 'unhealthy', '长期记忆: 连接失败');
+            }
+        }
+        // 添加模式切换功能
+        async function toggleMode() {
+                    const newMode = currentMode === 'web' ? 'vtuber' : 'web';
+                    
+                    try {
+                        if (newMode === 'vtuber') {
+                            vtuberWs = new WebSocket('ws://localhost:8096/ws');
+                            
+                            vtuberWs.onopen = () => {
+                                currentMode = newMode;
+                                document.getElementById('modeSwitch').textContent = '切换到Web模式';
+                                document.getElementById('canvas-container').style.display = 'none';
+                                addSystemMessage('已切换到VTuber模式');
+                            };
+                            
+                            vtuberWs.onerror = () => {
+                                addSystemMessage('VTuber模式连接失败，请确保服务已启动');
+                                currentMode = 'web';
+                                document.getElementById('modeSwitch').textContent = '切换到VTuber模式';
+                                document.getElementById('canvas-container').style.display = 'block';
+                                resizeModel(); // 重新调整模型大小
+                            };
+                            
+                            vtuberWs.onclose = () => {
+                                currentMode = 'web';
+                                document.getElementById('modeSwitch').textContent = '切换到VTuber模式';
+                                document.getElementById('canvas-container').style.display = 'block';
+                                addSystemMessage('VTuber连接已断开，已切换回Web模式');
+                                resizeModel(); // 重新调整模型大小
+                            };
+                        } else {
+                            if (vtuberWs && vtuberWs.readyState === WebSocket.OPEN) {
+                                vtuberWs.close();
+                            }
+                            vtuberWs = null;
+                            currentMode = 'web';
+                            document.getElementById('modeSwitch').textContent = '切换到VTuber模式';
+                            document.getElementById('canvas-container').style.display = 'block';
+                            addSystemMessage('已切换到Web模式');
+                            resizeModel(); // 重新调整模型大小
+                        }
+                    } catch (error) {
+                        console.error('模式切换失败:', error);
+                        addSystemMessage('模式切换失败，已恢复到Web模式');
+                        resizeModel(); // 重新调整模型大小
+                    }
+                }
+
+        // 将 resizeModel 函数提取到全局作用域
+        function resizeModel() {
+            if (model && model.width && model.height) {
+                const container = document.getElementById('canvas-container');
+                const scale = Math.min(
+                    container.clientWidth / model.width * 0.9,
+                    container.clientHeight / model.height * 0.9
+                );
+                model.scale.set(scale);
+                model.position.set(
+                    (container.clientWidth - model.width * scale) / 2,
+                    (container.clientHeight - model.height * scale) / 2
+                );
+            }
+        }
+
+        // 处理用户消息
+        async function processUserMessage(message, isVoice = false) {
+            try {
+                addUserMessage(message);
+                const response = await callLLMService(message, isVoice);
+                addAssistantMessage(response.response, response.source, response.sources);
+            } catch (error) {
+                console.error("消息处理失败:", error);
+                addSystemMessage("服务暂时不可用，请稍后再试");
+            }
+        }
+
+        // 修改语音响应函数
+        async function speakResponse(text) {
+            console.log("开始处理语音响应，当前模式:", currentMode, "文本:", text);
+
+            try {
+                // 无论什么模式都先合成音频
+                const response = await axios.get(`http://127.0.0.1:2020/dealAudio?text=${encodeURIComponent(text)}&base_name=test`);
+                
+                if (!response.data || !response.data.audioUrl) {
+                    throw new Error("语音合成失败：未获得音频URL");
+                }
+
+                console.log("语音合成成功，音频URL:", response.data.audioUrl);
+
+                if (currentMode === 'vtuber') {
+                    // VTuber模式：直接播放音频
+                    const audio = new Audio(response.data.audioUrl);
+                    await audio.play();
+                } else {
+                    // Web模式：使用Live2D模型播放
+                    const emotionConfig = await setModelEmotionState(text);
+                    const audioUrl = response.data.audioUrl + "?v=" + Date.now();
+                    
+                    model.speak(audioUrl, {
+                        volume: 1,
+                        expression: emotionConfig.expression,
+                        resetExpression: true,
+                        crossOrigin: "anonymous",
+                        onStart: () => {
+                            if (emotionConfig.motionFile) {
+                                model.motions.startMotion(emotionConfig.motionFile);
+                            }
+                        },
+                        onFinish: () => {
+                            setModelEmotionState("您好，我是您的助手");
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("语音处理失败:", error);
+                addSystemMessage("语音合成或播放失败，请检查服务是否正常运行");
+            }
+        }
+        // 更新服务状态显示
+        function updateServiceStatus(service, status, text) {
+            const statusElements = document.querySelectorAll('.service-status');
+            let index = 0;
+
+            switch (service) {
+                case 'memory': index = 0; break;
+                case 'kb': index = 1; break;
+                case 'letta': index = 2; break;
+            }
+
+            if (statusElements[index]) {
+                const indicator = statusElements[index].querySelector('.status-indicator');
+                const span = statusElements[index].querySelector('span:nth-child(2)');
+
+                // 移除所有状态类
+                indicator.classList.remove('status-healthy', 'status-unhealthy', 'status-unknown', 'status-disabled');
+
+                // 添加对应状态类
+                indicator.classList.add(`status-${status}`);
+                span.textContent = text;
+            }
+        }
+
+        // 获取状态文本
+        function getStatusText(status) {
+            switch (status) {
+                case 'healthy': return '正常';
+                case 'unhealthy': return '异常';
+                case 'disabled': return '已禁用';
+                case 'unavailable': return '不可用';
+                case 'enabled': return '已启用';
+                case 'import_failed': return '导入失败';
+                default: return '未知';
+            }
+        }
+        async function callLLMService(message, isVoice = false) {
+            try {
+                // 获取功能开关状态
+                const useMemory = document.getElementById('memory-toggle').checked;
+                const useKnowledgeBase = document.getElementById('kb-toggle').checked;
+                const useLetta = document.getElementById('letta-toggle').checked;
+
+                const response = await axios.post(`${LLM_SERVICE_URL}/api/chat`, {
+                    message: message,
+                    is_voice: isVoice,
+                    use_memory: useMemory,
+                    use_kb: useKnowledgeBase,
+                    use_letta: useLetta
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    timeout: 30000
+                });
+
+                // 打印整个响应对象
+                console.log('LLM服务返回的完整数据:', response.data);
+
+                if (response.data.status === 'success') {
+                    return {
+                        status: 'success',
+                        response: response.data.response,
+                        source: response.data.source,
+                        sources: response.data.sources,
+                        raw_responses: response.data.raw_responses
+                    };
+                } else {
+                    throw new Error(response.data.error || "服务响应失败");
+                }
+            } catch (error) {
+                console.error("LLM服务调用失败:", error);
+                throw error;
+            }
+        }
+
+
+
+        // 语音交互功能
+        async function startVoiceSession() {
+            try {
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                await axios.get('http://127.0.0.1:2021/start_record');
+
+                document.getElementById('startButton').style.display = "none";
+                document.getElementById('endButton').style.display = "block";
+
+                startPolling();
+            } catch (error) {
+                error.name === "NotAllowedError"
+                    ? alert("请允许麦克风访问以使用语音功能")
+                    : console.error("语音启动失败:", error);
+            }
+        }
+
+        async function endVoiceSession() {
+            try {
+                await axios.get('http://127.0.0.1:2021/stop_record');
+                audioStream?.getTracks().forEach(track => track.stop());
+
+                document.getElementById('startButton').style.display = "block";
+                document.getElementById('endButton').style.display = "none";
+            } catch (error) {
+                console.error("语音结束失败:", error);
+            }
+        }
+
+        let lastProcessedText = '';
+
+        // 轮询语音识别结果
+        function startPolling() {
+            setInterval(async () => {
+                try {
+                    const response = await axios.get('http://127.0.0.1:2021/get_texts');
+                    const text = response.data.text?.trim();
+
+                    console.log('API Response:', JSON.stringify(response.data));
+                    console.log('Current Text:', text);
+                    console.log('Last Processed Text:', lastProcessedText);
+
+                    // 只处理新的、非空文本
+                    if (text && text !== lastProcessedText) {
+                        console.log('Processing new text:', text);
+                        lastProcessedText = text;
+
+                        // 使用 isVoice=true 调用 processUserMessage
+                        await processUserMessageWithVoice(text);
+                    }
+                } catch (error) {
+                    console.error("轮询失败:", error);
+                }
+            }, 1000);
+        }
+
+        // 聊天界面功能
+        // 聊天界面功能
+        function addMessage(sender, content, source = null) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            // 准备消息内容
+            let contentHTML = content;
+            let sourceTag = '';
+
+            // 如果是AI回复并且有来源，添加标签
+            const showSources = document.getElementById('sources-toggle').checked;
+            if (sender === 'ai' && source && showSources) {
+                switch (source) {
+                    case 'memory':
+                        sourceTag = '<span class="source-tag memory">记忆服务</span>';
+                        break;
+                    case 'knowledge_base':
+                    case 'knowledge_base_low_confidence':
+                        sourceTag = '<span class="source-tag knowledge">知识库</span>';
+                        break;
+                    case 'letta':
+                    case 'letta_low_confidence':
+                        sourceTag = '<span class="source-tag letta">长期记忆</span>';
+                        break;
+                    case 'openai':
+                        sourceTag = '<span class="source-tag openai">OpenAI</span>';
+                        break;
+                    case 'deepseek':
+                        sourceTag = '<span class="source-tag deepseek">DeepSeek</span>';
+                        break;
+                    case 'merged_llm':
+                        sourceTag = '<span class="source-tag merged">融合回复</span>';
+                        break;
+                    case 'qwen':
+                        sourceTag = '<span class="source-tag qwen">千问</span>';
+                        break;
+                }
+            }
+
+            // 创建消息结构
+            messageDiv.innerHTML = `
+                <div class="sender">${sender === 'user' ? '您' : '助手'}</div>
+                <div class="content ${sender === 'ai' ? 'merged-response' : ''}">
+                    ${sourceTag}
+                    <span class="typewriter-text">${sender === 'ai' ? '' : contentHTML}</span>
+                </div>
+            `;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // 如果是AI消息，使用打字机效果
+            if (sender === 'ai') {
+                const textElement = messageDiv.querySelector('.typewriter-text');
+                typewriterEffect(textElement, contentHTML);
+            }
+        }
+
+        // 打字机效果函数
+        function typewriterEffect(element, text, speed = 30) {
+            let i = 0;
+            const htmlContent = parseHTMLContent(text);
+            let currentText = '';
+            
+            function type() {
+                if (i < htmlContent.length) {
+                    // 添加当前字符（可能是HTML标签或文本）
+                    currentText += htmlContent[i];
+                    element.innerHTML = currentText;
+                    i++;
+                    
+                    // 滚动到底部
+                    const messagesDiv = document.getElementById('chat-messages');
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // 解析HTML内容，将标签和文本分开处理
+        // 解析HTML内容的更高级版本
+        function parseHTMLContent(html) {
+            // 简单的方法是按字符分割
+            // 但这可能会破坏HTML标签
+            // 对于复杂的HTML解析，可能需要更复杂的逻辑
+            
+            // 这里使用一个简单的方法，将HTML标签和文本分开
+            const result = [];
+            let inTag = false;
+            let currentChunk = '';
+            
+            for (let i = 0; i < html.length; i++) {
+                const char = html[i];
+                
+                if (char === '<') {
+                    if (currentChunk) {
+                        // 如果当前不在标签内，将文本按字符添加到结果中
+                        if (!inTag) {
+                            for (const textChar of currentChunk) {
+                                result.push(textChar);
+                            }
+                        } else {
+                            // 如果在标签内，将整个标签作为一个单元添加
+                            result.push(currentChunk);
+                        }
+                        currentChunk = '';
+                    }
+                    inTag = true;
+                    currentChunk = '<';
+                } else if (char === '>' && inTag) {
+                    currentChunk += '>';
+                    result.push(currentChunk);
+                    currentChunk = '';
+                    inTag = false;
+                } else {
+                    currentChunk += char;
+                    // 如果不在标签内，并且是最后一个字符，添加到结果
+                    if (!inTag && i === html.length - 1) {
+                        for (const textChar of currentChunk) {
+                            result.push(textChar);
+                        }
+                    }
+                    // 如果在标签内，并且是最后一个字符，添加整个标签
+                    else if (inTag && i === html.length - 1) {
+                        result.push(currentChunk);
+                    }
+                }
+            }
+            
+            return result;
+        }
+
+        function addSystemMessage(content) {
+            const messagesDiv = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system';
+            
+            // 创建内容容器
+            const contentSpan = document.createElement('span');
+            contentSpan.className = 'typewriter-text';
+            messageDiv.appendChild(contentSpan);
+            
+            messagesDiv.appendChild(messageDiv);
+            
+            // 应用打字机效果
+            typewriterEffect(contentSpan, content, 20);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function updateChatHistory(userMessage, aiMessage) {
+            chatHistory.push(
+                { role: "user", content: userMessage },
+                { role: "assistant", content: aiMessage }
+            );
+            if (chatHistory.length > 10) chatHistory = chatHistory.slice(-10);
+        }
+
+        // 情感分析函数
+        async function analyzeEmotionWithBERT(text) {
+            try {
+                console.log("开始情感分析，文本:", text);
+
+                const response = await axios.post('http://localhost:5000/analyze_emotion', {
+                    text: text
+                });
+
+                console.log("BERT情感分析结果:", {
+                    emotion: response.data.emotion,
+                    confidence: response.data.confidence,
+                    text: response.data.text
+                });
+
+                // 根据情感分析结果改变球的颜色
+                changeBallColor(response.data.emotion);
+
+                return response.data;
+            } catch (error) {
+                console.error("情感分析失败:", error);
+                return { emotion: 'default', confidence: 0 };
+            }
+        }
+
+        // 改变球的颜色
+        function changeBallColor(emotion) {
+            const ball = document.getElementById('emotion-ball');
+
+            // 根据情感设置不同的颜色
+            switch (emotion) {
+                case 'happy':
+                    ball.style.backgroundColor = 'yellow';  // 开心
+                    break;
+                case 'thinking':
+                    ball.style.backgroundColor = 'blue';  // 思考
+                    break;
+                case 'elegant':
+                    ball.style.backgroundColor = 'purple';  // 优雅
+                    break;
+                case 'sad':
+                    ball.style.backgroundColor = 'gray';  // 难过
+                    break;
+                case 'angry':
+                    ball.style.backgroundColor = 'red';  // 生气
+                    break;
+                case 'surprised':
+                    ball.style.backgroundColor = 'orange';  // 惊讶
+                    break;
+                default:
+                    ball.style.backgroundColor = 'blue';  // 默认蓝色
+                    break;
+            }
+        }
+
+
+        // 设置表情和动作函数
+        async function setModelEmotionState(text) {
+            try {
+                const emotionResult = await analyzeEmotionWithBERT(text);
+                console.log("情感分析详细结果:", emotionResult);
+
+                const config = EmotionActionMap[emotionResult.emotion] || EmotionActionMap.default;
+                const expression = config.expressions[Math.floor(Math.random() * config.expressions.length)];
+
+                // 设置表情
+                if (model.internalModel.expressionManager && expression) {
+                    console.log("正在设置表情:", expression);
+                    const expressionResult = await model.internalModel.expressionManager.setExpression(expression);
+                    if (!expressionResult) {
+                        console.error("表情设置失败:", expression);
+                    }
+                }
+
+                // 设置动作
+                if (model.internalModel.motionManager && config.motionFile) {
+                    console.log("正在设置动作:", config.motionFile);
+                    const motionResult = await model.internalModel.motionManager.startMotion(config.motionFile);
+                    if (!motionResult) {
+                        console.error("动作播放失败:", config.motionFile);
+                    }
+                }
+
+                return {
+                    expression: expression,
+                    motionFile: config.motionFile,
+                    emotion: emotionResult.emotion,
+                    confidence: emotionResult.confidence
+                };
+            } catch (error) {
+                console.error("设置表情和动作失败:", error);
+                return {
+                    expression: EmotionActionMap.default.expressions[0],
+                    motionFile: EmotionActionMap.default.motionFile
+                };
+            }
+        }
+
+        // 语音响应函数
+        async function speakResponse(text) {
+            console.log("开始处理语音响应，当前模式:", currentMode, "文本:", text);
+
+            if (currentMode === 'vtuber') {
+                try {
+                    const response = await axios.get(`http://127.0.0.1:2020/dealAudio?text=${encodeURIComponent(text)}&base_name=test`);
+                    
+                    if (response.data && response.data.audioUrl) {
+                        const audio = new Audio(response.data.audioUrl);
+                        
+                        // 确保音频输出到 VoiceMeeter Input
+                        audio.setSinkId('VoiceMeeter Input')
+                            .then(() => {
+                                return audio.play();
+                            })
+                            .catch(err => {
+                                console.error("音频设备设置或播放失败:", err);
+                                // 如果设置特定设备失败，尝试直接播放
+                                return audio.play();
+                            });
+                    }
+                } catch (error) {
+                    console.error("VTuber模式语音合成失败:", error);
+                    addSystemMessage("语音合成失败，请检查服务是否正常运行");
+                }
+                return;
+            }
+
+            // Web模式保持不变
+            setModelEmotionState(text)
+                .then(emotionConfig => {
+                    console.log("情感配置结果:", emotionConfig);
+
+                    return axios.get(`http://127.0.0.1:2020/dealAudio?text=${encodeURIComponent(text)}&base_name=test`)
+                        .then(response => {
+                            const audioUrl = response.data.audioUrl + "?v=" + Date.now();
+                            console.log("音频URL:", audioUrl);
+
+                            model.speak(audioUrl, {
+                                volume: 1,
+                                expression: emotionConfig.expression,
+                                resetExpression: true,
+                                crossOrigin: "anonymous",
+                                onStart: () => {
+                                    console.log("开始播放语音，使用表情:", emotionConfig.expression);
+                                    if (emotionConfig.motionFile) {
+                                        console.log("开始播放动作:", emotionConfig.motionFile);
+                                        model.motions.startMotion(emotionConfig.motionFile);
+                                    }
+                                },
+                                onFinish: () => {
+                                    console.log("语音播放结束，恢复默认状态");
+                                    setModelEmotionState("您好，我是您的助手");
+                                }
+                            });
+                        });
+                })
+                .catch(error => {
+                    console.error("处理失败:", error);
+                    console.error("错误详情:", error.message);
+                    console.error("错误堆栈:", error.stack);
+                });
+        }
+
+        // 修改processUserMessage函数以支持视觉分析
+        async function processUserMessage(message, isVoice = false) {
+            try {
+                let imageData = null;
+                let stream = null;
+
+                // 检查是否包含视觉分析关键词
+                if (message.includes('看到') || message.includes('看见') || message.includes('看一下')) {
+                    try {
+                        // 添加视频元素（如果不存在）
+                        let video = document.getElementById('camera');
+                        if (!video) {
+                            video = document.createElement('video');
+                            video.id = 'camera';
+                            video.autoplay = true;
+                            video.style.display = 'none';
+                            document.body.appendChild(video);
+                        }
+
+                        // 初始化摄像头
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: {
+                                width: 640,
+                                height: 480
+                            }
+                        });
+                        video.srcObject = stream;
+
+                        // 等待视频加载
+                        await new Promise(resolve => {
+                            video.onloadedmetadata = () => {
+                                video.play();
+                                resolve();
+                            };
+                        });
+
+                        // 等待2秒让用户准备
+                        addSystemMessage("正在准备拍照...");
+                        await new Promise(resolve => setTimeout(resolve, 2000));
+
+                        // 捕获图像
+                        const canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0);
+                        imageData = canvas.toDataURL('image/jpeg');
+
+                        // 添加正在处理的提示
+                        addSystemMessage("正在分析图像...");
+
+                        // 调用视觉分析API
+                        const visionResponse = await axios.post('http://localhost:7856/api/vision/camera', {
+                            image: imageData,
+                            prompt: message
+                        });
+
+                        // 处理视觉分析响应
+                        if (visionResponse.data.status === 'success') {
+                            // 添加用户消息和AI响应
+                            addMessage('user', message);
+                            addMessage('ai', visionResponse.data.response, 'qwen');
+
+                            // 播放语音回复
+                            speakResponse(visionResponse.data.response);
+
+                            // 更新对话历史
+                            updateChatHistory(message, visionResponse.data.response);
+                        } else {
+                            throw new Error(visionResponse.data.error || "视觉分析失败");
+                        }
+
+                        // 清理摄像头资源
+                        if (stream) {
+                            stream.getTracks().forEach(track => track.stop());
+                        }
+                        return;
+                    } catch (error) {
+                        console.error("视觉分析错误:", error);
+                        addSystemMessage("视觉分析失败，请稍后重试");
+                        if (stream) {
+                            stream.getTracks().forEach(track => track.stop());
+                        }
+                        return;
+                    }
+                }
+
+                // 如果不是视觉分析请求，按原有方式处理
+                addMessage('user', message);
+
+                // 调用常规LLM服务
+                const result = await callLLMService(message, isVoice);
+
+                if (result.status === 'success') {
+                    addMessage('ai', result.response, result.source);
+                    // 无论是什么模式都需要进行语音合成
+                    await speakResponse(result.response);
+                    updateChatHistory(message, result.response);
+
+                    if (result.raw_responses && Object.keys(result.raw_responses).length > 0) {
+                        showOriginalResponses(result.raw_responses);
+                    }
+                } else {
+                    throw new Error("服务返回失败状态");
+                }
+            } catch (error) {
+                console.error("消息处理失败:", error);
+                addSystemMessage("服务暂时不可用，请稍后再试");
+            }
+        }
+
+
+        // 显示原始响应
+        function showOriginalResponses(responses) {
+            // 准备各个来源的响应
+            let responsesContent = '';
+
+            // 处理记忆部分
+            if (responses.memories && responses.memories.length > 0) {
+                responsesContent += '<div class="response-section"><h4>相关记忆</h4>';
+                responses.memories.forEach(memory => {
+                    const similarityPercent = Math.round(memory.similarity_score * 100);
+                    responsesContent += `
+                        <div class="memory-item">
+                            <div><strong>相似度:</strong> ${similarityPercent}%</div>
+                            <div><strong>时间:</strong> ${memory.time_ago} 前</div>
+                            <div class="memory-text">${memory.text}</div>
+                        </div>
+                    `;
+                });
+                responsesContent += '</div>';
+            }
+
+            // 处理知识库响应
+            if (responses.knowledge_base) {
+                responsesContent += `
+                    <div class="response-section">
+                        <h4>知识库回复</h4>
+                        <div class="kb-response">${responses.knowledge_base}</div>
+                    </div>
+                `;
+            }
+
+            // 处理Letta记忆响应
+            if (responses.letta) {
+                responsesContent += `
+                    <div class="response-section">
+                        <h4>长期记忆回复</h4>
+                        <div class="letta-response">${responses.letta}</div>
+                    </div>
+                `;
+            }
+
+            // 处理AI模型响应
+            const models = [];
+            if (responses.openai) models.push({ name: 'OpenAI', response: responses.openai });
+            if (responses.deepseek) models.push({ name: 'DeepSeek', response: responses.deepseek });
+
+            if (models.length > 0) {
+                responsesContent += '<div class="response-section"><h4>AI模型回复</h4>';
+                models.forEach(model => {
+                    responsesContent += `
+                        <div class="model-response">
+                            <div class="model-name">${model.name}</div>
+                            <div class="model-text">${model.response}</div>
+                        </div>
+                    `;
+                });
+                responsesContent += '</div>';
+            }
+
+            // 只有当有内容时才显示
+            if (responsesContent) {
+                addMessage('system', `
+                    <details>
+                        <summary>查看详细信息</summary>
+                        <div class="original-responses">${responsesContent}</div>
+                    </details>
+                `);
+            }
+        }
+
+        // 语音消息处理函数
+        async function processUserMessageWithVoice(message) {
+            return processUserMessage(message, true);
+        }
+
+    </script>
+</body>
+<!-- 情感分析球 -->
+<div id="emotion-ball"
+    style="width: 50px; height: 50px; border-radius: 50%; position: fixed; bottom: 20px; left: 20px; background-color: blue;">
+</div>
+</html>

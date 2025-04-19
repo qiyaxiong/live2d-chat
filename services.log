@@ -1,0 +1,490 @@
+2025-02-18 10:24:03,037 - INFO - 已启动服务: python edge-tts.py
+2025-02-18 10:24:03,042 - INFO - 已启动服务: python memory_service.py
+2025-02-18 10:24:03,042 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 10:24:03,267 - ERROR - 服务执行错误: Command 'python memory_service.py' returned non-zero exit status 2.
+2025-02-18 10:30:54,525 - INFO - 已启动服务: edge-tts\venv\Scripts\python.exe edge-tts\edge-tts.py
+2025-02-18 10:30:54,530 - INFO - 已启动服务: edge-tts\venv\Scripts\python.exe edge-tts\memory_service.py
+2025-02-18 10:30:54,530 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 10:31:00,497 - ERROR - 服务执行错误: Command 'edge-tts\venv\Scripts\python.exe edge-tts\memory_service.py' returned non-zero exit status 1.
+2025-02-18 10:31:52,309 - WARNING - 
+正在停止所有服务...
+2025-02-18 10:31:52,310 - INFO - 所有服务已停止
+2025-02-18 10:32:10,493 - INFO - 已启动服务: edge-tts\venv\Scripts\python.exe edge-tts\edge-tts.py
+2025-02-18 10:32:10,496 - INFO - 已启动服务: edge-tts\venv\Scripts\python.exe edge-tts\memory_service.py
+2025-02-18 10:32:10,497 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 10:32:15,405 - ERROR - 服务执行错误: Command 'edge-tts\venv\Scripts\python.exe edge-tts\memory_service.py' returned non-zero exit status 1.
+2025-02-18 10:33:41,677 - WARNING - 
+正在停止所有服务...
+2025-02-18 10:33:41,678 - INFO - 所有服务已停止
+2025-02-18 10:48:18,845 - INFO - 已启动服务: edge-tts\venv\Scripts\python.exe edge-tts\edge-tts.py
+2025-02-18 10:48:18,849 - INFO - 已启动服务: edge-tts\venv\Scripts\python.exe edge-tts\memory_service.py
+2025-02-18 10:48:18,849 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 10:48:24,161 - ERROR - 服务执行错误: Command 'edge-tts\venv\Scripts\python.exe edge-tts\memory_service.py' returned non-zero exit status 1.
+2025-02-18 10:48:28,615 - WARNING - 
+正在停止所有服务...
+2025-02-18 10:48:28,615 - INFO - 所有服务已停止
+2025-02-18 10:51:54,841 - INFO - 已启动服务: C:\Users\86159\miniconda3\envs\agent\python.exe edge-tts\edge-tts.py
+2025-02-18 10:51:54,845 - INFO - 已启动服务: C:\Users\86159\miniconda3\envs\agent\python.exe edge-tts\memory_service.py
+2025-02-18 10:51:54,845 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 10:51:55,073 - ERROR - 服务执行错误: Command 'C:\Users\86159\miniconda3\envs\agent\python.exe edge-tts\edge-tts.py' returned non-zero exit status 1.
+2025-02-18 10:52:31,855 - ERROR - 未找到 conda 环境变量
+2025-02-18 10:53:28,065 - WARNING - 
+正在停止所有服务...
+2025-02-18 10:53:28,065 - INFO - 所有服务已停止
+2025-02-18 10:53:29,807 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-18 10:53:29,811 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-18 10:53:29,811 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 10:53:30,044 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-02-18 10:53:50,283 - WARNING - 
+正在停止所有服务...
+2025-02-18 10:53:50,284 - INFO - 所有服务已停止
+2025-02-18 10:57:05,311 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-18 10:57:05,315 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-18 10:57:05,315 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 12:15:22,753 - WARNING - 
+正在停止所有服务...
+2025-02-18 12:15:22,756 - INFO - 所有服务已停止
+2025-02-18 13:19:53,765 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-18 13:19:53,770 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-18 13:19:53,774 - INFO - 已启动服务: python emotion_service.py
+2025-02-18 13:19:53,774 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 13:19:53,979 - ERROR - 服务执行错误: Command 'python emotion_service.py' returned non-zero exit status 2.
+2025-02-18 13:20:58,584 - WARNING - 
+正在停止所有服务...
+2025-02-18 13:20:58,587 - INFO - 所有服务已停止
+2025-02-18 13:21:24,151 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-18 13:21:24,155 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-18 13:21:24,158 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-18 13:21:24,159 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 14:57:18,829 - WARNING - 
+正在停止所有服务...
+2025-02-18 14:57:18,841 - INFO - 所有服务已停止
+2025-02-18 14:58:07,735 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-18 14:58:07,738 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-18 14:58:07,741 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-18 14:58:07,741 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 14:58:08,397 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-02-18 14:58:15,802 - WARNING - 
+正在停止所有服务...
+2025-02-18 14:58:15,804 - INFO - 所有服务已停止
+2025-02-18 14:59:00,434 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-18 14:59:00,437 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-18 14:59:00,440 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-18 14:59:00,440 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-18 15:04:25,432 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 3221225786.
+2025-02-18 15:04:25,636 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 3221225786.
+2025-02-18 15:04:25,780 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 3221225786.
+2025-02-19 13:02:34,380 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-19 13:02:34,384 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-19 13:02:34,388 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-19 13:02:34,391 - INFO - 已启动服务: python edge-tts/llm.py
+2025-02-19 13:02:34,392 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-19 13:08:35,048 - WARNING - 
+正在停止所有服务...
+2025-02-19 13:08:35,056 - INFO - 所有服务已停止
+2025-02-19 14:10:12,725 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-19 14:10:12,729 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-19 14:10:12,732 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-19 14:10:12,735 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-19 14:10:12,735 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-19 14:12:00,694 - WARNING - 
+正在停止所有服务...
+2025-02-19 14:12:00,702 - INFO - 所有服务已停止
+2025-02-19 15:01:03,267 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-19 15:01:03,271 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-19 15:01:03,274 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-19 15:01:03,279 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-19 15:01:03,279 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-19 16:01:52,198 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 3221225786.
+2025-02-19 16:01:52,235 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 3221225786.
+2025-02-19 16:01:53,059 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 3221225786.
+2025-02-19 16:01:53,627 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 3221225786.
+2025-02-21 14:47:42,955 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-21 14:47:42,959 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-21 14:47:42,963 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-21 14:47:42,966 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-21 14:47:42,969 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-21 14:47:42,969 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-21 14:50:12,873 - WARNING - 
+正在停止所有服务...
+2025-02-21 14:50:12,882 - INFO - 所有服务已停止
+2025-02-21 14:51:17,419 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-21 14:51:17,422 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-21 14:51:17,425 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-21 14:51:17,430 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-21 14:51:17,433 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-21 14:51:17,433 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-21 14:51:19,725 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-02-21 14:51:55,823 - WARNING - 
+正在停止所有服务...
+2025-02-21 14:51:55,831 - INFO - 所有服务已停止
+2025-02-21 14:55:45,537 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-21 14:55:45,541 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-21 14:55:45,544 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-21 14:55:45,547 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-21 14:55:45,550 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-21 14:55:45,550 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-21 15:24:29,818 - WARNING - 
+正在停止所有服务...
+2025-02-21 15:24:29,826 - INFO - 所有服务已停止
+2025-02-21 15:24:35,781 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-21 15:24:35,784 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-21 15:24:35,788 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-21 15:24:35,791 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-21 15:24:35,794 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-21 15:24:35,795 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-21 15:24:49,610 - WARNING - 
+正在停止所有服务...
+2025-02-21 15:24:49,619 - INFO - 所有服务已停止
+2025-02-21 15:24:57,456 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-21 15:24:57,459 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-21 15:24:57,463 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-21 15:24:57,467 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-21 15:24:57,471 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-21 15:24:57,472 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-21 15:30:05,055 - WARNING - 
+正在停止所有服务...
+2025-02-21 15:30:05,066 - INFO - 所有服务已停止
+2025-02-22 21:57:47,643 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-22 21:57:47,650 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-22 21:57:47,655 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-22 21:57:47,660 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-22 21:57:47,666 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-22 21:57:47,666 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-22 22:01:27,149 - WARNING - 
+正在停止所有服务...
+2025-02-22 22:01:27,159 - INFO - 所有服务已停止
+2025-02-22 22:01:31,317 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-22 22:01:31,321 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-22 22:01:31,325 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-22 22:01:31,328 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-22 22:01:31,332 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-22 22:01:31,332 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-22 22:02:16,165 - WARNING - 
+正在停止所有服务...
+2025-02-22 22:02:16,174 - INFO - 所有服务已停止
+2025-02-22 22:03:36,144 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-22 22:03:36,147 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-22 22:03:36,150 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-22 22:03:36,152 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-22 22:03:36,156 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-22 22:03:36,156 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-22 22:05:47,593 - WARNING - 
+正在停止所有服务...
+2025-02-22 22:05:47,602 - INFO - 所有服务已停止
+2025-02-22 22:12:08,162 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-02-22 22:12:08,165 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-02-22 22:12:08,168 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-02-22 22:12:08,178 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-02-22 22:12:08,182 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-02-22 22:12:08,183 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-02-22 23:05:28,220 - WARNING - 
+正在停止所有服务...
+2025-02-22 23:05:28,239 - INFO - 所有服务已停止
+2025-04-01 09:48:24,917 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 09:48:24,922 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 09:48:24,926 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 09:48:24,931 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 09:48:24,936 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 09:48:24,936 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:04:44,455 - WARNING - 
+正在停止所有服务...
+2025-04-01 10:04:44,465 - INFO - 所有服务已停止
+2025-04-01 10:08:34,593 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:08:34,598 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:08:34,602 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:08:34,606 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:08:34,610 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:08:34,610 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:08:34,791 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:08:34,795 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:08:34,799 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:08:34,803 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:08:34,815 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:09:04,075 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:09:04,079 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:09:04,083 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:09:04,086 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:09:04,090 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:09:04,090 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:09:04,301 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:09:04,306 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:09:04,309 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:09:04,312 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:09:04,319 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:09:15,464 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:09:15,468 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:09:15,472 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:09:15,476 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:09:15,480 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:09:15,480 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:09:15,667 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:09:15,670 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:09:15,672 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:09:15,679 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:09:15,685 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:10:02,967 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:10:02,971 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:10:02,975 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:10:02,978 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:10:02,982 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:10:02,982 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:10:03,174 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:10:03,176 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:10:03,179 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:10:03,183 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:10:03,187 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:10:34,453 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:10:34,457 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:10:34,461 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:10:34,465 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:10:34,470 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:10:34,470 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:10:34,685 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:10:34,689 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:10:34,692 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:10:34,697 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:10:34,698 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:11:31,218 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:11:31,223 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:11:31,228 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:11:31,234 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:11:31,241 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:11:31,242 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:11:31,600 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:11:31,600 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:11:31,628 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:11:31,632 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:11:31,638 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:12:07,932 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:12:07,940 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:12:07,943 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:12:07,949 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:12:07,954 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:12:07,954 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:12:08,134 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:12:08,141 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:12:08,145 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:12:08,153 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:12:08,156 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:14:24,389 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:14:24,394 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:14:24,398 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:14:24,402 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:14:24,407 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:14:24,408 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:14:24,630 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:14:24,638 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:14:24,644 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:14:24,649 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:14:24,655 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:16:08,977 - INFO - 已启动服务: python edge-tts/edge-tts.py
+2025-04-01 10:16:08,981 - INFO - 已启动服务: python edge-tts/memory_service.py
+2025-04-01 10:16:08,984 - INFO - 已启动服务: python edge-tts/emotion_service.py
+2025-04-01 10:16:08,988 - INFO - 已启动服务: python edge-tts/llm.py --enable-letta
+2025-04-01 10:16:08,991 - INFO - 已启动服务: python edge-tts/vlm.py
+2025-04-01 10:16:08,991 - INFO - 所有服务已启动,按 Ctrl+C 停止服务...
+2025-04-01 10:16:09,175 - ERROR - 服务执行错误: Command 'python edge-tts/edge-tts.py' returned non-zero exit status 1.
+2025-04-01 10:16:09,177 - ERROR - 服务执行错误: Command 'python edge-tts/memory_service.py' returned non-zero exit status 1.
+2025-04-01 10:16:09,180 - ERROR - 服务执行错误: Command 'python edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-01 10:16:09,194 - ERROR - 服务执行错误: Command 'python edge-tts/llm.py --enable-letta' returned non-zero exit status 1.
+2025-04-01 10:16:09,200 - ERROR - 服务执行错误: Command 'python edge-tts/vlm.py' returned non-zero exit status 1.
+2025-04-01 10:17:28,947 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 10:17:28,951 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 10:17:28,955 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 10:17:28,961 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 10:17:28,967 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 10:17:28,967 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 10:22:34,212 - WARNING - 
+正在停止所有服务...
+2025-04-01 10:22:34,260 - INFO - 所有服务已停止
+2025-04-01 10:22:39,751 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 10:22:39,755 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 10:22:39,759 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 10:22:39,765 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 10:22:39,770 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 10:22:39,770 - INFO - 等待服务启动...
+2025-04-01 10:22:44,780 - INFO - 尝试连接TTS服务健康检查端点: http://127.0.0.1:2020/health
+2025-04-01 10:22:46,845 - WARNING - TTS服务健康检查失败 (尝试 1/3): HTTPConnectionPool(host='127.0.0.1', port=2020): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001676229ACB0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:22:48,849 - INFO - 尝试连接TTS服务健康检查端点: http://127.0.0.1:2020/health
+2025-04-01 10:22:50,904 - WARNING - TTS服务健康检查失败 (尝试 2/3): HTTPConnectionPool(host='127.0.0.1', port=2020): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001676229B640>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:22:52,911 - INFO - 尝试连接TTS服务健康检查端点: http://127.0.0.1:2020/health
+2025-04-01 10:22:58,423 - INFO - TTS服务健康检查响应: 404
+2025-04-01 10:22:58,424 - WARNING - TTS服务服务健康检查失败
+2025-04-01 10:22:58,424 - INFO - 尝试连接记忆服务健康检查端点: http://127.0.0.1:5090/health
+2025-04-01 10:23:03,428 - WARNING - 记忆服务健康检查失败 (尝试 1/3): HTTPConnectionPool(host='127.0.0.1', port=5090): Read timed out. (read timeout=5)
+2025-04-01 10:23:05,436 - INFO - 尝试连接记忆服务健康检查端点: http://127.0.0.1:5090/health
+2025-04-01 10:23:10,454 - WARNING - 记忆服务健康检查失败 (尝试 2/3): HTTPConnectionPool(host='127.0.0.1', port=5090): Read timed out. (read timeout=5)
+2025-04-01 10:23:12,459 - INFO - 尝试连接记忆服务健康检查端点: http://127.0.0.1:5090/health
+2025-04-01 10:23:17,464 - WARNING - 记忆服务健康检查失败 (尝试 3/3): HTTPConnectionPool(host='127.0.0.1', port=5090): Read timed out. (read timeout=5)
+2025-04-01 10:23:17,465 - WARNING - 记忆服务服务健康检查失败
+2025-04-01 10:23:17,465 - INFO - 尝试连接情感服务健康检查端点: http://127.0.0.1:5000/health
+2025-04-01 10:23:19,497 - WARNING - 情感服务健康检查失败 (尝试 1/3): HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000167622F49A0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:23:21,500 - INFO - 尝试连接情感服务健康检查端点: http://127.0.0.1:5000/health
+2025-04-01 10:23:23,557 - WARNING - 情感服务健康检查失败 (尝试 2/3): HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000167622F52D0>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:23:25,567 - INFO - 尝试连接情感服务健康检查端点: http://127.0.0.1:5000/health
+2025-04-01 10:23:27,615 - WARNING - 情感服务健康检查失败 (尝试 3/3): HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001676229AD70>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:23:27,617 - WARNING - 情感服务服务健康检查失败
+2025-04-01 10:23:27,618 - INFO - 尝试连接LLM服务健康检查端点: http://127.0.0.1:5000/health
+2025-04-01 10:23:29,660 - WARNING - LLM服务健康检查失败 (尝试 1/3): HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001676229AF50>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:23:31,663 - INFO - 尝试连接LLM服务健康检查端点: http://127.0.0.1:5000/health
+2025-04-01 10:23:33,714 - WARNING - LLM服务健康检查失败 (尝试 2/3): HTTPConnectionPool(host='127.0.0.1', port=5000): Max retries exceeded with url: /health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001676229B250>: Failed to establish a new connection: [WinError 10061] 由于目标计算机积极拒绝，无法连接。'))
+2025-04-01 10:23:35,720 - INFO - 尝试连接LLM服务健康检查端点: http://127.0.0.1:5000/health
+2025-04-01 10:23:35,727 - INFO - LLM服务健康检查响应: 404
+2025-04-01 10:23:35,727 - WARNING - LLM服务服务健康检查失败
+2025-04-01 10:23:35,728 - INFO - 尝试连接VLM服务健康检查端点: http://127.0.0.1:7856/health
+2025-04-01 10:23:35,754 - INFO - VLM服务健康检查响应: 200
+2025-04-01 10:23:35,755 - INFO - VLM服务服务健康检查通过
+2025-04-01 10:23:35,755 - INFO - 尝试连接知识库健康检查端点: http://localhost:3001/api/status
+2025-04-01 10:23:35,768 - INFO - 知识库健康检查响应: 404
+2025-04-01 10:23:37,776 - INFO - 尝试连接知识库健康检查端点: http://localhost:3001/api/status
+2025-04-01 10:23:37,783 - INFO - 知识库健康检查响应: 404
+2025-04-01 10:23:39,794 - INFO - 尝试连接知识库健康检查端点: http://localhost:3001/api/status
+2025-04-01 10:23:39,812 - INFO - 知识库健康检查响应: 404
+2025-04-01 10:23:39,813 - WARNING - 知识库服务健康检查失败
+2025-04-01 10:23:39,813 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 10:24:02,390 - WARNING - 
+正在停止所有服务...
+2025-04-01 10:24:02,422 - INFO - 所有服务已停止
+2025-04-01 10:24:22,505 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 10:24:22,509 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 10:24:22,513 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 10:24:22,518 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 10:24:22,523 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 10:24:22,523 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 10:29:06,999 - WARNING - 
+正在停止所有服务...
+2025-04-01 10:29:07,099 - INFO - 所有服务已停止
+2025-04-01 10:29:23,445 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 10:29:23,449 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 10:29:23,452 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 10:29:23,457 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 10:29:23,462 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 10:29:23,462 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 10:32:56,908 - WARNING - 
+正在停止所有服务...
+2025-04-01 10:32:56,926 - INFO - 所有服务已停止
+2025-04-01 10:36:26,643 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 10:36:26,647 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 10:36:26,651 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 10:36:26,655 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 10:36:26,659 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 10:36:26,660 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 11:37:41,651 - WARNING - 
+正在停止所有服务...
+2025-04-01 11:37:41,735 - INFO - 所有服务已停止
+2025-04-01 11:49:44,098 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 11:49:44,104 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 11:49:44,109 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 11:49:44,114 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 11:49:44,120 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 11:49:44,121 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 12:01:32,525 - WARNING - 
+正在停止所有服务...
+2025-04-01 12:01:32,546 - INFO - 所有服务已停止
+2025-04-01 12:01:49,187 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 12:01:49,192 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 12:01:49,196 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 12:01:49,201 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 12:01:49,206 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 12:01:49,207 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-01 12:16:46,768 - WARNING - 
+正在停止所有服务...
+2025-04-01 12:16:46,857 - INFO - 所有服务已停止
+2025-04-01 12:16:51,938 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-01 12:16:51,944 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-01 12:16:51,949 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-01 12:16:51,955 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-01 12:16:51,961 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-01 12:16:51,962 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-05 20:25:55,627 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-05 20:25:55,633 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-05 20:25:55,637 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-05 20:25:55,642 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-05 20:25:55,647 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-05 20:25:55,647 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-05 20:26:12,277 - ERROR - 服务执行错误: Command '"C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py' returned non-zero exit status 1.
+2025-04-05 20:39:30,484 - WARNING - 
+正在停止所有服务...
+2025-04-05 20:39:30,492 - INFO - 所有服务已停止
+2025-04-05 20:40:08,921 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-05 20:40:08,925 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-05 20:40:08,930 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-05 20:40:08,934 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-05 20:40:08,939 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-05 20:40:08,939 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-05 20:59:55,435 - WARNING - 
+正在停止所有服务...
+2025-04-05 20:59:55,449 - INFO - 所有服务已停止
+2025-04-10 22:29:00,383 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-10 22:29:00,387 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-10 22:29:00,391 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-10 22:29:00,395 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-10 22:29:00,399 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-10 22:29:00,399 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-10 22:37:15,899 - WARNING - 
+正在停止所有服务...
+2025-04-10 22:37:15,911 - INFO - 所有服务已停止
+2025-04-10 22:37:25,976 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-10 22:37:25,980 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-10 22:37:25,987 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-10 22:37:25,992 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-10 22:37:25,997 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-10 22:37:25,997 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-10 22:56:07,306 - WARNING - 
+正在停止所有服务...
+2025-04-10 22:56:07,321 - INFO - 所有服务已停止
+2025-04-10 22:56:08,691 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-10 22:56:08,696 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-10 22:56:08,701 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-10 22:56:08,706 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-10 22:56:08,711 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-10 22:56:08,712 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-10 23:08:55,206 - WARNING - 
+正在停止所有服务...
+2025-04-10 23:08:55,226 - INFO - 所有服务已停止
+2025-04-19 14:17:08,861 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-19 14:17:08,866 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-19 14:17:08,870 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-19 14:17:08,874 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-19 14:17:08,879 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-19 14:17:08,885 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" vtuber_service.py
+2025-04-19 14:17:08,890 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" mode_service.py
+2025-04-19 14:17:08,891 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-19 15:56:33,485 - WARNING - 
+正在停止所有服务...
+2025-04-19 15:56:33,629 - INFO - 所有服务已停止
+2025-04-19 15:57:11,156 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-19 15:57:11,161 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-19 15:57:11,165 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-19 15:57:11,169 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-19 15:57:11,173 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-19 15:57:11,178 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" vtuber_service.py
+2025-04-19 15:57:11,183 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" mode_service.py
+2025-04-19 15:57:11,183 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-19 15:57:14,030 - ERROR - 服务执行错误: Command '"C:\Users\86159\miniconda3\envs\agent\python.exe" vtuber_service.py' returned non-zero exit status 1.
+2025-04-19 15:58:11,506 - WARNING - 
+正在停止所有服务...
+2025-04-19 15:58:11,534 - INFO - 所有服务已停止
+2025-04-19 15:59:27,910 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-19 15:59:27,914 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-19 15:59:27,919 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-19 15:59:27,925 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-19 15:59:27,932 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-19 15:59:27,938 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" vtuber_service.py
+2025-04-19 15:59:27,943 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" mode_service.py
+2025-04-19 15:59:27,944 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-19 16:02:36,834 - WARNING - 
+正在停止所有服务...
+2025-04-19 16:02:36,929 - INFO - 所有服务已停止
+2025-04-19 16:07:21,941 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/edge-tts.py
+2025-04-19 16:07:21,947 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/memory_service.py
+2025-04-19 16:07:21,952 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/emotion_service.py
+2025-04-19 16:07:21,958 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/llm.py --enable-letta
+2025-04-19 16:07:21,965 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" edge-tts/vlm.py
+2025-04-19 16:07:21,972 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" vtuber_service.py
+2025-04-19 16:07:21,978 - INFO - 已启动服务: "C:\Users\86159\miniconda3\envs\agent\python.exe" mode_service.py
+2025-04-19 16:07:21,979 - INFO - 所有服务已启动，按 Ctrl+C 停止服务...
+2025-04-19 16:35:20,235 - WARNING - 
+正在停止所有服务...
+2025-04-19 16:35:20,405 - INFO - 所有服务已停止

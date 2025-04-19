@@ -1,0 +1,46 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "die mong yi.moc3",
+		"Textures": [
+			"die mong yi.8192/texture_00.png"
+		],
+		"Physics": "die mong yi.physics3.json",
+		"DisplayInfo": "die mong yi.cdi3.json",
+		"Expressions": [
+			{"Name": "花花", "File": "face/花花.exp3.json"},
+			{"Name": "团扇", "File": "face/团扇.exp3.json"},
+			{"Name": "托腮", "File": "face/托腮.exp3.json"},
+			{"Name": "托胸", "File": "face/托胸.exp3.json"},
+			{"Name": "外套移除", "File": "face/外套移除.exp3.json"},
+			{"Name": "心心", "File": "face/心心.exp3.json"},
+			{"Name": "星星", "File": "face/星星.exp3.json"},
+			{"Name": "眼镜", "File": "face/眼镜.exp3.json"},
+			{"Name": "折扇", "File": "face/折扇.exp3.json"},
+			{"Name": "折扇展开", "File": "face/折扇展开.exp3.json"}
+		],
+		"Motions": {
+			"Idle": [
+				{"File": "待机动画.motion3.json"}
+			],
+			"TapBody": [
+				{"File": "die mong yi.motion3.json"}
+			]
+		}
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeROpen",
+				"ParamEyeLOpen"
+			]
+		}
+	]
+}
