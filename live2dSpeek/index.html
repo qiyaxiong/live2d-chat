@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="./js/cubism4.min.js"></script>
+    <script src="./js/wakeword-detection.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
     <title>智能融合对话系统</title>
 </head>
@@ -187,6 +188,10 @@
                 e.preventDefault();
                 checkServicesStatus();
             });
+                // 添加唤醒词检测初始化
+            if (window.WakewordDetection) {
+                window.WakewordDetection.startDetection(true);
+            }
         }
 
         // 发送消息处理
@@ -489,6 +494,10 @@
 
                 document.getElementById('startButton').style.display = "block";
                 document.getElementById('endButton').style.display = "none";
+                // 添加这行：在结束语音会话后重新启动唤醒词检测
+                if (window.WakewordDetection) {
+                    window.WakewordDetection.startDetection(true);
+                }
             } catch (error) {
                 console.error("语音结束失败:", error);
             }
@@ -497,28 +506,50 @@
         let lastProcessedText = '';
 
         // 轮询语音识别结果
+    // 增加轮询持续时间，从页面加载后持续轮询
         function startPolling() {
-            setInterval(async () => {
-                try {
-                    const response = await axios.get('http://127.0.0.1:2021/get_texts');
-                    const text = response.data.text?.trim();
+        // 确保之前的轮询被清除
+        if (window.pollingInterval) {
+            clearInterval(window.pollingInterval);
+        }
 
-                    console.log('API Response:', JSON.stringify(response.data));
-                    console.log('Current Text:', text);
-                    console.log('Last Processed Text:', lastProcessedText);
-
-                    // 只处理新的、非空文本
-                    if (text && text !== lastProcessedText) {
-                        console.log('Processing new text:', text);
-                        lastProcessedText = text;
-
-                        // 使用 isVoice=true 调用 processUserMessage
-                        await processUserMessageWithVoice(text);
-                    }
-                } catch (error) {
-                    console.error("轮询失败:", error);
+    // 开始新的轮询
+  
+  // 设置新的轮询
+        window.pollingInterval = setInterval(async () => {
+            try {
+            const response = await axios.get('http://127.0.0.1:2021/get_texts');
+            // 添加更多详细日志
+            console.log('轮询获取到响应:', response);
+            console.log('响应状态:', response.status);
+            console.log('响应数据:', JSON.stringify(response.data));
+            
+            const text = response.data.text?.trim();
+            if (text) {
+                console.log('获取到非空文本:', text);
+                if (text !== lastProcessedText) {
+                console.log('处理新文本:', text);
+                lastProcessedText = text;
+                await processUserMessageWithVoice(text);
+                } else {
+                console.log('文本已处理，跳过:', text);
                 }
-            }, 1000);
+            } else {
+                console.log('获取到空文本');
+            }
+            } catch (error) {
+            console.error("轮询失败:", error);
+            // 添加更多错误详情
+            if (error.response) {
+                console.error("错误状态:", error.response.status);
+                console.error("错误数据:", error.response.data);
+            } else if (error.request) {
+                console.error("未收到响应的请求:", error.request);
+            } else {
+                console.error("错误信息:", error.message);
+            }
+            }
+        }, 500); // 减少间隔到500毫秒，增加轮询频率
         }
 
         // 聊天界面功能
