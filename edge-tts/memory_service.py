@@ -8,9 +8,7 @@ import uvicorn
 from datetime import datetime, timedelta
 
 class Config:
-    MEMORY_RETENTION_DAYS = 1  # 记忆保留天数
     EMBEDDING_MODEL = "all-MiniLM-L6-v2"
-    CLEANUP_THRESHOLD = 100  # 触发清理的记忆数量阈值
 
 class Memory(BaseModel):
     user_message: str
@@ -98,11 +96,6 @@ async def save_memory(memory: Memory):
             ids=[memory_id],
             metadatas=[metadata]
         )
-
-        # 检查是否需要清理
-        all_memories = collection.get()
-        if len(all_memories["ids"]) > Config.CLEANUP_THRESHOLD:
-            cleanup_old_memories()
 
         return {"status": "saved", "memory_id": memory_id}
     except Exception as e:
