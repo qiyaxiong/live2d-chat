@@ -349,5 +349,46 @@
         // 启动应用
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
+    <!-- 在 canvas-container 后添加对话界面 -->
+    <div id="chat-container" style="position: absolute; bottom: 20px; right: 20px; width: 300px;">
+      <div id="chat-messages" style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.7); color: white; border-radius: 10px; padding: 10px; margin-bottom: 10px;">
+      </div>
+      <div style="display: flex;">
+        <input type="text" id="chat-input" style="flex: 1; padding: 5px; border-radius: 5px; border: none; margin-right: 5px;">
+        <button onclick="sendMessage()" style="padding: 5px 10px; border-radius: 5px; border: none; background: #4CAF50; color: white;">发送</button>
+      </div>
+    </div>
+    
+    <script>
+    // 在现有 JavaScript 代码后添加
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const messages = document.getElementById('chat-messages');
+      const text = input.value.trim();
+      
+      if (!text) return;
+      
+      // 添加用户消息
+      messages.innerHTML += `<div style="margin-bottom: 10px;"><strong>我:</strong> ${text}</div>`;
+      input.value = '';
+      
+      try {
+        // 发送消息到 AI 服务
+        const response = await window.electronAPI.sendMessage(text);
+        // 添加 AI 回复
+        messages.innerHTML += `<div style="margin-bottom: 10px;"><strong>AI:</strong> ${response}</div>`;
+        messages.scrollTop = messages.scrollHeight;
+      } catch (error) {
+        console.error('发送消息失败:', error);
+      }
+    }
+    
+    // 添加回车发送功能
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+    </script>
 </body>
 </html>

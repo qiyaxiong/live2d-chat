@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu, Tray, screen, nativeImage } = require('electron');
 const path = require('path');
+const aiService = require('./services/ai-service');
 
 // 全局变量
 let mainWindow;
@@ -161,4 +162,18 @@ app.on('before-quit', () => {
 ipcMain.on('app-quit', () => {
   isQuitting = true;
   app.quit();
-}); 
+});
+
+// 添加 AI 消息处理
+ipcMain.handle('send-message', async (event, text) => {
+  try {
+    const response = await aiService.generateResponse(text);
+    if (response && response.output && response.output.text) {
+      return response.output.text;
+    }
+    return '抱歉，我现在无法回答。';
+  } catch (error) {
+    console.error('消息处理失败:', error);
+    return '发生错误，请稍后再试。';
+  }
+});
