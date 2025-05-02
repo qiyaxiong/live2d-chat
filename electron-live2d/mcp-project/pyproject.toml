@@ -1,0 +1,10 @@
+[project]
+name = "mcp-project"
+version = "0.1.0"
+description = "MCP news service"
+requires-python = ">=3.10"
+dependencies = [
+    "modelcontext-protocol",
+    "httpx",
+    "python-dotenv"
+]

@@ -1,16 +1,26 @@
-const { app, BrowserWindow, ipcMain, Menu, Tray, screen, nativeImage } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  Tray,
+  screen,
+  nativeImage
+} = require('electron');
 const path = require('path');
-const aiService = require('./services/ai-service');
+
+// 正确导入 aiService 实例
+const aiService = require('./services/ai-service'); // 根据你的路径调整
 
 // 全局变量
 let mainWindow;
 let tray = null;
 let isQuitting = false;
-let isModelDragMode = false; // 是否处于模型拖动模式
 
-function createWindow() {
+// 创建主窗口
+async function createWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-  
+
   // 创建浏览器窗口，设置为透明、无边框
   mainWindow = new BrowserWindow({
     width: 400,
@@ -33,7 +43,6 @@ function createWindow() {
     }
   });
 
-  // 设置窗口类型为工具窗口，确保在某些平台上更好地支持透明
   if (process.platform === 'win32') {
     mainWindow.setThumbarButtons([]);
   }
@@ -46,44 +55,18 @@ function createWindow() {
     mainWindow = null;
   });
 
-  // 创建系统托盘
   createTray();
-  
-  // 添加加载完成事件
-  mainWindow.webContents.on('did-finish-load', () => {
-    console.log("页面加载完成");
-  });
-  
-  // 重新添加IPC监听器，用于窗口拖动
-  ipcMain.on('window-drag', (event, { x, y }) => {
-    if (mainWindow && !isModelDragMode) {
-      mainWindow.setPosition(x, y);
-    }
-  });
-  
-  // 添加拖动区域更新
-  ipcMain.handle('set-model-drag', (event, isDragging) => {
-    isModelDragMode = isDragging;
-    return true;
-  });
-  
-  // 获取窗口位置
-  ipcMain.handle('get-window-position', (event) => {
-    if (mainWindow) {
-      return mainWindow.getPosition();
-    }
-    return [0, 0];
-  });
 }
 
+// 创建系统托盘图标和菜单
 function createTray() {
   // 创建一个空白图标
   const emptyIcon = nativeImage.createEmpty();
   tray = new Tray(emptyIcon);
-  
+
   const contextMenu = Menu.buildFromTemplate([
-    { 
-      label: '显示/隐藏', 
+    {
+      label: '显示/隐藏',
       click: () => {
         if (mainWindow) {
           if (mainWindow.isVisible()) {
@@ -106,18 +89,18 @@ function createTray() {
       }
     },
     { type: 'separator' },
-    { 
-      label: '退出', 
+    {
+      label: '退出',
       click: () => {
         isQuitting = true;
         app.quit();
       }
     }
   ]);
-  
+
   tray.setToolTip('Live2D 模型');
   tray.setContextMenu(contextMenu);
-  
+
   tray.on('click', () => {
     if (mainWindow) {
       if (mainWindow.isVisible()) {
@@ -130,50 +113,113 @@ function createTray() {
 }
 
 // 应用程序就绪事件
-app.whenReady().then(() => {
-  // 确保应用在macOS上支持透明窗口
+app.whenReady().then(async () => {
+  // macOS 上隐藏 Dock 图标
   if (process.platform === 'darwin') {
     app.dock.hide();
   }
-  
-  createWindow();
+
+  // 初始化 AI 服务
+  console.log('⏳ 正在初始化 AI 服务...');
+  const initialized = await aiService.initialize();
+  if (!initialized) {
+    console.error('❌ AI 服务初始化失败，应用将退出');
+    app.quit();
+    return;
+  }
+
+  // 创建窗口
+  console.log('🔧 开始创建主窗口...');
+  await createWindow();
+  console.log('✅ 主窗口已创建');
 
   app.on('activate', () => {
-    // 在 macOS 上，当点击 dock 图标且没有其他窗口打开时，
-    // 通常在应用程序中重新创建一个窗口
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
 });
 
-// 当所有窗口关闭时退出应用，macOS 除外
+// 所有窗口关闭时退出（macOS 除外）
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on('before-quit', () => {
+// 退出前清理资源
+app.on('before-quit', async () => {
   isQuitting = true;
+  if (aiService && aiService.cleanup) {
+    await aiService.cleanup();
+  }
 });
 
-// IPC 处理器
-ipcMain.on('app-quit', () => {
-  isQuitting = true;
-  app.quit();
-});
-
-// 添加 AI 消息处理
+// IPC 处理器：发送消息给AI助手
 ipcMain.handle('send-message', async (event, text) => {
+  if (!aiService) {
+    return { output: { text: 'AI 服务尚未准备好，请稍后再试。' } };
+  }
+
   try {
     const response = await aiService.generateResponse(text);
     if (response && response.output && response.output.text) {
-      return response.output.text;
+      return response;
     }
-    return '抱歉，我现在无法回答。';
+    return { output: { text: '抱歉，我现在无法回答。' } };
   } catch (error) {
     console.error('消息处理失败:', error);
-    return '发生错误，请稍后再试。';
+    return { output: { text: '发生错误，请稍后再试。' } };
   }
+});
+
+// MCP 工具调用
+ipcMain.handle('mcp-call-tool', async (event, { service, tool, args }) => {
+  if (!aiService) {
+    return { success: false, error: 'AI 服务未初始化' };
+  }
+
+  try {
+    const result = await aiService.callMCPTool(service, tool, args);
+    return result;
+  } catch (error) {
+    console.error(`MCP工具调用失败: ${tool}`, error.message);
+    return { success: false, error: error.message };
+  }
+});
+
+// 设置模型是否允许拖动
+ipcMain.handle('set-model-drag', (event, isDragging) => {
+  if (mainWindow) {
+    mainWindow.setIgnoreMouseEvents(isDragging, { forward: true });
+    return true;
+  }
+  return false;
+});
+
+// 获取当前窗口位置
+ipcMain.handle('get-window-position', (event) => {
+  const window = BrowserWindow.getFocusedWindow();
+  if (!window) return null;
+  const [x, y] = window.getPosition();
+  return { x, y };
+});
+
+// 健康检查接口（可选）
+ipcMain.handle('check-health', () => {
+  return {
+    status: 'ok',
+    aiServiceInitialized: !!aiService,
+    mcpServers: Object.keys(aiService?.mcpServers || {}),
+    toolsAvailable: Object.keys(aiService?.toolsCache || {})
+  };
+});
+
+// 错误处理兜底
+process.on('uncaughtException', (error) => {
+  console.error('❌ 未捕获的异常:', error);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('⚠️ 未处理的Promise拒绝:', reason);
 });

@@ -362,26 +362,28 @@
     <script>
     // 在现有 JavaScript 代码后添加
     async function sendMessage() {
-      const input = document.getElementById('chat-input');
-      const messages = document.getElementById('chat-messages');
-      const text = input.value.trim();
-      
-      if (!text) return;
-      
-      // 添加用户消息
-      messages.innerHTML += `<div style="margin-bottom: 10px;"><strong>我:</strong> ${text}</div>`;
-      input.value = '';
-      
-      try {
-        // 发送消息到 AI 服务
-        const response = await window.electronAPI.sendMessage(text);
-        // 添加 AI 回复
-        messages.innerHTML += `<div style="margin-bottom: 10px;"><strong>AI:</strong> ${response}</div>`;
-        messages.scrollTop = messages.scrollHeight;
-      } catch (error) {
-        console.error('发送消息失败:', error);
-      }
-    }
+        const input = document.getElementById('chat-input');
+        const messages = document.getElementById('chat-messages');
+        const text = input.value.trim();
+        
+        if (!text) return;
+        
+        // 添加用户消息
+        messages.innerHTML += `<div style="margin-bottom: 10px;"><strong>我:</strong> ${text}</div>`;
+        input.value = '';
+        
+        try {
+            // 发送消息到 AI 服务
+            const response = await window.electronAPI.sendMessage(text);
+            
+            // ✅ 只取 output.text 字段
+            messages.innerHTML += `<div style="margin-bottom: 10px;"><strong>AI:</strong> ${response.output.text}</div>`;
+            
+            messages.scrollTop = messages.scrollHeight;
+        } catch (error) {
+            console.error('发送消息失败:', error);
+        }
+        }
     
     // 添加回车发送功能
     document.getElementById('chat-input').addEventListener('keypress', (e) => {
